@@ -7,34 +7,35 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity(name = "utilisateur")
+@Entity
+@Table(name="utilisateur", schema = "public")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idutilisateur")
     private Integer id;
 
-    @Column(name = "nom_utilisateur", nullable = false)
-    private String nomUtilisateur;
+    @Column(name = "nomutilisateur")
+    private String lastName;
 
-    @Column(name = "prenom_utilisateur", nullable = false)
-    private String prenomUtilisateur;
+    @Column(name = "prenomutilisateur")
+    private String firstName;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "motdepasse")
     private String password;
 
-    @Column(name = "Email", nullable = false, unique = true)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "isAdmin")
+    @Column(name = "isadmin")
     private Boolean isAdmin;
 
     public User() {
     }
 
     public User(String nomUtilisateur, String prenomUtilisateur, String password, String email, Boolean isAdmin) {
-        this.nomUtilisateur = nomUtilisateur;
-        this.prenomUtilisateur = prenomUtilisateur;
+        this.lastName = nomUtilisateur;
+        this.firstName = prenomUtilisateur;
         this.password = password;
         this.email = email;
         this.isAdmin = isAdmin;
@@ -45,19 +46,19 @@ public class User {
     }
 
     public String getLastName() {
-        return nomUtilisateur;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.nomUtilisateur = lastName;
+        this.lastName = lastName;
     }
 
     public String getFirstName() {
-        return prenomUtilisateur;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.prenomUtilisateur = firstName;
+        this.firstName = firstName;
     }
 
     public String getPassword() {
