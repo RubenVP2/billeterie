@@ -1,15 +1,13 @@
 package fr.agiletp.back.billeterie.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="utilisateur", schema = "public")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idutilisateur")
     private Integer id;
 
@@ -75,7 +73,7 @@ public class User {
         this.email = email;
     }
 
-    public boolean isAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
