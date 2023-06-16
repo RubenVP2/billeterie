@@ -7,38 +7,37 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Utilisateur", schema = "x")
+@Entity(name = "utilisateur")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
-    @Column(name = "NomUtilisateur", nullable = false)
-    private String lastName;
+    @Column(name = "nom_utilisateur", nullable = false)
+    private String nomUtilisateur;
 
-    @Column(name = "PrenomUtilisateur", nullable = false)
-    private String firstName;
+    @Column(name = "prenom_utilisateur", nullable = false)
+    private String prenomUtilisateur;
 
-    @Column(name = "MotDePasse", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "Email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "IsAdmin", nullable = false)
-    private boolean admin;
+    @Column(name = "isAdmin")
+    private Boolean isAdmin;
 
     public User() {
     }
 
-    public User(String lastName, String firstName, String password, String email, boolean admin) {
-        this.lastName = lastName;
-        this.firstName = firstName;
+    public User(String nomUtilisateur, String prenomUtilisateur, String password, String email, Boolean isAdmin) {
+        this.nomUtilisateur = nomUtilisateur;
+        this.prenomUtilisateur = prenomUtilisateur;
         this.password = password;
         this.email = email;
-        this.admin = admin;
+        this.isAdmin = isAdmin;
     }
 
     public int getId() {
@@ -46,19 +45,19 @@ public class User {
     }
 
     public String getLastName() {
-        return lastName;
+        return nomUtilisateur;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.nomUtilisateur = lastName;
     }
 
     public String getFirstName() {
-        return firstName;
+        return prenomUtilisateur;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.prenomUtilisateur = firstName;
     }
 
     public String getPassword() {
@@ -78,11 +77,11 @@ public class User {
     }
 
     public boolean isAdmin() {
-        return admin;
+        return isAdmin;
     }
 
     public void setAdmin(boolean admin) {
-        this.admin = admin;
+        this.isAdmin = admin;
     }
 
 }
