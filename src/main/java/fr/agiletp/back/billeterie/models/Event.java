@@ -21,6 +21,9 @@ public class Event {
     @Column(name = "nomevenement")
     private String name;
 
+    @Column(name = "lieuevenement")
+    private String location;
+
     @Column(name = "datedebut")
     private Date startDate;
 
@@ -28,7 +31,7 @@ public class Event {
     private Date endDate;
 
     @Column(name = "prixpassunitaire")
-    private Float price;
+    private Float multipassPrice;
 
     @Column(name = "imagepath")
     private String imagePath;
@@ -40,7 +43,7 @@ public class Event {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.price = price;
+        this.multipassPrice = price;
         this.imagePath = imagePath;
     }
 
@@ -54,6 +57,14 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Date getStartDate() {
@@ -72,12 +83,12 @@ public class Event {
         this.endDate = endDate;
     }
 
-    public Float getPrice() {
-        return price;
+    public Float getMultipassPrice() {
+        return multipassPrice;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setMultipassPrice(Float price) {
+        this.multipassPrice = price;
     }
 
     public String getImagePath() {
