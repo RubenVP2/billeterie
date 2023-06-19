@@ -30,6 +30,7 @@ class UserServiceTest {
         this.createUser();
     }
 
+    // Connexion de l'utilisateur
     @Test
     @DisplayName("Test le bon fonctionnement de la méthode login()")
     void testLogin() throws Exception {
@@ -47,7 +48,7 @@ class UserServiceTest {
             userService.login("incorrect@gmail.com", "123456");
         });
         // Then
-        assertEquals("Utilisateur introuvable", exception.getMessage());
+        assertEquals("Utilisateur introuvable, veuillez vérifier l'email ou le mot de passe.", exception.getMessage());
     }
 
     @Test
@@ -58,7 +59,7 @@ class UserServiceTest {
             userService.login("test@gmail.com", "incorrect");
         });
         // Then
-        assertEquals("Utilisateur introuvable", exception.getMessage());
+        assertEquals("Utilisateur introuvable, veuillez vérifier l'email ou le mot de passe.", exception.getMessage());
     }
 
     // Test de la méthode de création d'un utilisateur
@@ -93,6 +94,31 @@ class UserServiceTest {
         });
         // Then
         assertEquals("409 CONFLICT Un utilisateur existe déjà avec cet email", exception.getMessage().replace("\"", ""));
+    }
+
+    // Test sur la suppression d'un utilisateur
+    @Test
+    @DisplayName("Test le bon fonctionnement de la méthode deleteUser()")
+    void testDeleteUser() {
+        // Given
+        String email = "test@gmail.com";
+        // When
+        userService.deleteUser(email);
+        // Then
+        assertNull(userRepository.findByEmail("test@gmail.com"));
+    }
+
+    @Test
+    @DisplayName("Test de la méthode deleteUser() avec un email incorrect")
+    void testDeleteUserWithIncorrectEmail() {
+        // Given
+        String email = "azerrtyuiop@gmail.com";
+        // When
+        Exception exception = assertThrows(Exception.class, () -> {
+            userService.deleteUser(email);
+        });
+        // Then
+        assertEquals("404 NOT_FOUND Suppression impossible, utilisateur introuvable.", exception.getMessage().replace("\"", ""));
     }
 
     public void createUser() {
