@@ -1,6 +1,7 @@
 package fr.agiletp.back.billeterie.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import com.google.gson.Gson;
 
 import fr.agiletp.back.billeterie.models.Event;
 import fr.agiletp.back.billeterie.models.EventDate;
+import fr.agiletp.back.billeterie.models.json.DateEventJson;
+import fr.agiletp.back.billeterie.models.json.DetailsEvent;
 import fr.agiletp.back.billeterie.models.json.HomeJson;
 import fr.agiletp.back.billeterie.repositories.EventDateRepository;
 import fr.agiletp.back.billeterie.repositories.EventRepository;
@@ -36,6 +39,25 @@ public class EventService {
       
     }
 
+    public String getEventDetails(int id){
+        Event event = null;
+        if(eventRepository.existsById(id)){
+            event = eventRepository.getReferenceById(id);
+        }
+
+        DetailsEvent detailsEvent = new DetailsEvent(event);
+        List<DateEventJson> dateEventJsonList = new ArrayList<>();
+        for(EventDate ed : eventDateRepository.getFindByEvent(event)){
+            DateEventJson dateEventJson = new DateEventJson(ed);
+            dateEventJsonList.add(dateEventJson);
+        }
+        detailsEvent.setDatesEvent(dateEventJsonList);
+
+        Gson gson = new Gson();
+      
+        return gson.toJson(detailsEvent);
+    }
+
     private Float getLowerPriceEvent(Event event){
         
         List<EventDate> eventDateList = eventDateRepository.getFindByEvent(event);
@@ -44,6 +66,7 @@ public class EventService {
             priceList.add(eventDate.getPlacePrice());
         }
 
-        return priceList.stream().min(Float::compare).get();
+        Collections.sort(priceList);
+        return priceList.get(0);
     }
 }

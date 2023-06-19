@@ -20,13 +20,13 @@ public class UserService {
      * @return utilisateur connecté
      * @throws Exception erreur si l'utilisateur n'est pas trouvé
      */
-    public User login(String email, String password) throws Exception {
+    public User login(String email, String password) throws NullPointerException {
         // Récupération de l'utilisateur
         User user = userRepository.findByEmailAndPassword(email, password);
 
         if (user == null) {
             // Throw erreur pour dire qu'aucun user n'a été trouvé
-            throw new Exception("Utilisateur introuvable, veuillez vérifier l'email ou le mot de passe.");
+            throw new NullPointerException("Utilisateur introuvable, veuillez vérifier l'email ou le mot de passe.");
         }
         // Retourner l'utilisateur
         return user;
