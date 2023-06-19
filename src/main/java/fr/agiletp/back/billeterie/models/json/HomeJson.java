@@ -2,6 +2,8 @@ package fr.agiletp.back.billeterie.models.json;
 
 import java.sql.Date;
 
+import fr.agiletp.back.billeterie.models.Event;
+
 public class HomeJson {
 
     private Integer idEvent;
@@ -13,17 +15,23 @@ public class HomeJson {
     private Date startDate;
     private Date endDate;
 
-    public HomeJson(Integer idEvent, String nameEvent, String locationEvent, Float minimumPrice, String imagePath,
-            Float multiPassPrice, Date startDate, Date endDate) {
-        this.idEvent = idEvent;
-        this.nameEvent = nameEvent;
-        this.locationEvent = locationEvent;
-        this.minimumPrice = minimumPrice;
-        this.imagePath = imagePath;
-        this.multiPassPrice = multiPassPrice;
-        this.startDate = startDate;
-        this.endDate = endDate;
+
+    public HomeJson() {
     }
+
+
+    public HomeJson(Event event, Float minimumPrice) {
+        this.idEvent = event.getId();
+        this.nameEvent = event.getName();
+        this.locationEvent = event.getLocation();
+        this.minimumPrice = minimumPrice;
+        this.imagePath = event.getImagePath();
+        this.multiPassPrice = event.getMultipassPrice();
+        this.startDate = event.getStartDate();
+        this.endDate = event.getEndDate();
+    }
+
+
 
     public Integer getIdEvent() {
         return idEvent;

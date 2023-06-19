@@ -7,15 +7,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.agiletp.back.billeterie.services.EventService;
 
+/**
+ * Classe controler pour la page d'accueil
+ */
 @RestController
 @RequestMapping("/api/home")
 public class HomeController {
-    
+
     @Autowired
     EventService eventService;
 
+    /**
+     * Méthode route pour récupérer la liste des évenements
+     * 
+     * @return String (json de HomeJson)
+     */
     @GetMapping("/getEvents")
-    public String getEvents(){
+    public String getEvents() {
         return eventService.getEventsListForHome();
     }
 

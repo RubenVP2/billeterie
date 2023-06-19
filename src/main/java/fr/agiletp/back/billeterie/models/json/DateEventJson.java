@@ -4,6 +4,9 @@ import java.util.Date;
 
 import fr.agiletp.back.billeterie.models.EventDate;
 
+/**
+ * Model pour l'objet JSon DateEvent
+ */
 public class DateEventJson {
     
     private Integer id;
@@ -11,9 +14,15 @@ public class DateEventJson {
     private Float price;
     private Integer placeMax;
     
+    /**
+     * Constructeur par défaut
+     */
     public DateEventJson() {
     }
 
+    /**
+     * Constructeur
+     */
     public DateEventJson(Integer id, Date date, Float price, Integer placeMax) {
         this.id = id;
         this.date = date;
@@ -21,6 +30,9 @@ public class DateEventJson {
         this.placeMax = placeMax;
     }
 
+    /**
+     * Constructeur via l'obejt EventDate
+     */
     public DateEventJson(EventDate eventDate) {
         this.id = eventDate.getId();
         this.date = eventDate.getDate();

@@ -9,7 +9,9 @@ import org.springframework.web.server.ResponseStatusException;
 import fr.agiletp.back.billeterie.models.User;
 import fr.agiletp.back.billeterie.services.UserService;
 
-
+/**
+ * Classe controller pour la gestion des utilisateurs et de la connexion
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:4000")
 @RequestMapping("/api/users")
@@ -20,7 +22,8 @@ public class UserController {
 
     /**
      * Connexion de l'utilisateur
-     * @param email email de l'utilisateur
+     * 
+     * @param email    email de l'utilisateur
      * @param password mot de passe de l'utilisateur
      * @return utilisateur connecté
      */
@@ -38,6 +41,7 @@ public class UserController {
 
     /**
      * Création d'un utilisateur
+     * 
      * @param user utilisateur à créer
      * @return utilisateur créé
      */
@@ -55,6 +59,7 @@ public class UserController {
 
     /**
      * Suppression d'un utilisateur
+     * 
      * @param email email de l'utilisateur à supprimer
      */
     @DeleteMapping("/delete")
