@@ -1,6 +1,7 @@
 package fr.agiletp.back.billeterie.services;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +53,22 @@ public class PurchaseService {
         Calendar calendar = Calendar.getInstance();
         Purchase purchase = new Purchase();
         purchase.setUser(user);
-        purchase.setDate((Date)calendar.getTime());
+        java.util.Date utilDate = calendar.getTime();
+        Date sqlDate = new Date(utilDate.getTime());
+
+        // Formater la date au format "yyyy-MM-dd"
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(sqlDate);
+
+        purchase.setDate(Date.valueOf(formattedDate));
         purchase.setTotalPrice(purchaseJson.getTotalPrice());
+        purchaseRepository.save(purchase);
         for (TicketJson ticketJson : purchaseJson.getTicketsList()) {
-            if(ticketJson.getIsMultiPass()){
+            if(Boolean.TRUE.equals(ticketJson.getIsMultiPass())){
                 buyMultiPass(event, purchase, ticketJson.getLastName(), ticketJson.getFirstName());
             } else {
-
-                buyTicket(event, purchase, ticketJson.getDate(), ticketJson.getLastName(), ticketJson.getFirstName());
+                
+                buyTicket(event, purchase, ticketJson.dateStringToJavaDate(), ticketJson.getLastName(), ticketJson.getFirstName());
 
             }
         }
@@ -74,16 +83,19 @@ public class PurchaseService {
             eventDate.setPlaceNumber(eventDate.getPlaceNumber()-1);
             eventDateRepository.save(eventDate);
         }
-
+        purchaseRepository.save(purchase);
         multiPassRepository.save(multiPass);
     }
 
     private void buyTicket(Event event, Purchase purchase, java.util.Date date, String lastName, String firstName) throws Exception{
-        EventDate eventDate = eventDateRepository.findByEventAndDate(event, (Date)date);
+        Date sqlDate = new Date(date.getTime());
+        EventDate eventDate = eventDateRepository.findByEventAndDate(event, sqlDate);
 
         eventDate.setPlaceNumber(eventDate.getPlaceNumber()-1);
 
+        
         ticketRepository.save(new Ticket(lastName, firstName, eventDate, purchase));
+        purchaseRepository.save(purchase);
         eventDateRepository.save(eventDate);
     }
 }

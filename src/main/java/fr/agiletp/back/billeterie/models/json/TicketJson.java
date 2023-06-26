@@ -1,19 +1,30 @@
 package fr.agiletp.back.billeterie.models.json;
 
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
+
+import com.google.gson.annotations.SerializedName;
 
 public class TicketJson {
     
     private Integer id;
-    private Date date;
+    private String date;
+    
+    @SerializedName(value = "name")
     private String lastName;
+
+    @SerializedName(value = "prenom")
     private String firstName;
+
+    @SerializedName(value = "isMultipass")
     private Boolean isMultiPass;
 
     public TicketJson() {
     }
 
-    public TicketJson(Integer id,Date date, String lastName, String firstName, Boolean isMultiPass) {
+    public TicketJson(Integer id,String date, String lastName, String firstName, Boolean isMultiPass) {
         this.id = id;
         this.date = date;
         this.lastName = lastName;
@@ -22,11 +33,11 @@ public class TicketJson {
     }
 
     
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -62,4 +73,8 @@ public class TicketJson {
         this.id = id;
     }
 
+    public Date dateStringToJavaDate() throws ParseException{
+        DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
+        return dateFormat.parse(this.date);
+    }
 }

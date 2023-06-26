@@ -2,11 +2,19 @@ package fr.agiletp.back.billeterie.models.json;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 public class PurchaseJson {
 
     private Integer idEvent;
+
+    @SerializedName(value = "user")
     private String emailUser;
+
+    @SerializedName(value = "prixTotal")
     private Float totalPrice;
+
+    @SerializedName(value = "billet")
     private List<TicketJson> ticketsList;
     
     public PurchaseJson() {
