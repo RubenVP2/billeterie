@@ -4,7 +4,10 @@ import java.util.List;
 
 import fr.agiletp.back.billeterie.models.Event;
 
-public class DetailsEvent {
+/**
+ * Model json de l'objet DetailsEventJson
+ */
+public class DetailsEventJson {
     
    private Integer id;
     private String name;
@@ -13,10 +16,16 @@ public class DetailsEvent {
     private String imagePath;
     private List<DateEventJson> datesEvent;
     
-    public DetailsEvent() {
+    /**
+     * Constructeur par défaut
+     */
+    public DetailsEventJson() {
     }
 
-    public DetailsEvent(Integer id, String name, String location, Float multiPassPrice, String imagePath,
+    /**
+     * Constructeur 
+     */
+    public DetailsEventJson(Integer id, String name, String location, Float multiPassPrice, String imagePath,
             List<DateEventJson> datesEvent) {
         this.id = id;
         this.name = name;
@@ -26,7 +35,10 @@ public class DetailsEvent {
         this.datesEvent = datesEvent;
     }
 
-    public DetailsEvent(Event event) {
+    /**
+     * Constructeur avec l'objet Event
+     */
+    public DetailsEventJson(Event event) {
         this.id = event.getId();
         this.name = event.getName();
         this.location = event.getLocation();

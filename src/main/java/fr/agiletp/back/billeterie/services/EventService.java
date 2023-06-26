@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import fr.agiletp.back.billeterie.models.Event;
 import fr.agiletp.back.billeterie.models.EventDate;
 import fr.agiletp.back.billeterie.models.json.DateEventJson;
-import fr.agiletp.back.billeterie.models.json.DetailsEvent;
+import fr.agiletp.back.billeterie.models.json.DetailsEventJson;
 import fr.agiletp.back.billeterie.models.json.HomeJson;
 import fr.agiletp.back.billeterie.repositories.EventDateRepository;
 import fr.agiletp.back.billeterie.repositories.EventRepository;
@@ -30,7 +30,7 @@ public class EventService {
        List<Event> events =  eventRepository.findAll();
        List<HomeJson> homeJsons = new ArrayList<>();
        for (Event event : events) {
-            HomeJson json = new HomeJson(event.getId(), event.getName(), event.getLocation(), getLowerPriceEvent(event), event.getImagePath(), event.getMultipassPrice(), event.getStartDate(), event.getEndDate());
+            HomeJson json = new HomeJson(event, getLowerPriceEvent(event));
             homeJsons.add(json);
        }
        Gson gson = new Gson();
@@ -45,9 +45,9 @@ public class EventService {
             event = eventRepository.getReferenceById(id);
         }
 
-        DetailsEvent detailsEvent = new DetailsEvent(event);
+        DetailsEventJson detailsEvent = new DetailsEventJson(event);
         List<DateEventJson> dateEventJsonList = new ArrayList<>();
-        for(EventDate ed : eventDateRepository.getFindByEvent(event)){
+        for(EventDate ed : eventDateRepository.findByEvent(event)){
             DateEventJson dateEventJson = new DateEventJson(ed);
             dateEventJsonList.add(dateEventJson);
         }
@@ -60,7 +60,7 @@ public class EventService {
 
     private Float getLowerPriceEvent(Event event){
         
-        List<EventDate> eventDateList = eventDateRepository.getFindByEvent(event);
+        List<EventDate> eventDateList = eventDateRepository.findByEvent(event);
         List<Float> priceList = new ArrayList<>();
         for (EventDate eventDate : eventDateList) {
             priceList.add(eventDate.getPlacePrice());
